@@ -5,234 +5,303 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cleino Frank — Full Stack Developer</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
 
   <!-- CURSOR -->
   <div class="cursor"></div>
-  <div class="cursor-follower"></div>
+  <div class="cursor-glow"></div>
+
+  <!-- MOUSE GLOW -->
+  <div class="mouse-glow"></div>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="loader-bar"></div>
+      <span class="loader-text">INITIALISING</span>
+    </div>
+  </div>
 
   <!-- NAV -->
   <nav id="navbar">
-    <div class="nav-logo">CF<span class="dot">.</span></div>
-    <ul class="nav-links">
-      <li><a href="#hero">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="nav-cta"><a href="#contact">Hire Me</a></div>
+    <div class="nav-logo">CF<span>.</span></div>
+    <div class="nav-right">
+      <span class="nav-status"><span class="status-dot"></span>Available</span>
+      <a href="#contact" class="nav-hire">Hire Me <i class="fas fa-arrow-right"></i></a>
+    </div>
   </nav>
 
-  <!-- HERO -->
-  <section id="hero">
+  <!-- SIDE NAV DOTS -->
+  <div class="side-nav">
+    <a href="#hero" class="side-dot active" data-label="Home"></a>
+    <a href="#about" class="side-dot" data-label="About"></a>
+    <a href="#skills" class="side-dot" data-label="Skills"></a>
+    <a href="#projects" class="side-dot" data-label="Projects"></a>
+    <a href="#contact" class="side-dot" data-label="Contact"></a>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero" class="snap-section">
     <canvas id="stars"></canvas>
-    <div class="hero-content">
-      <div class="hero-badge">&#x2022; Available for work</div>
-      <h1 class="hero-title">Cleino<br/><span class="purple">Frank</span></h1>
-      <div class="hero-subtitle">
-        <span id="typed"></span><span class="cursor-blink">|</span>
-      </div>
-      <p class="hero-desc">Full Stack Developer based in Dublin, Ireland.<br/>Building purposeful apps with clean code and real-world impact.</p>
-      <div class="hero-buttons">
-        <a href="#projects" class="btn-primary">View Projects</a>
-        <a href="#contact" class="btn-ghost">Get in Touch</a>
-      </div>
-      <div class="hero-stats">
-        <div class="stat"><span class="stat-num" data-target="5">0</span><span class="stat-label">Projects</span></div>
-        <div class="stat-divider"></div>
-        <div class="stat"><span class="stat-num" data-target="46">0</span><span class="stat-label">Tests Written</span></div>
-        <div class="stat-divider"></div>
-        <div class="stat"><span class="stat-num" data-target="98">0</span><span class="stat-label">% Coverage</span></div>
+
+    <div class="hero-left">
+      <div class="hero-tag">Full Stack Developer · Dublin, Ireland</div>
+      <h1 class="hero-name">
+        <span class="name-line" data-text="CLEINO">CLEINO</span>
+        <span class="name-line purple-stroke" data-text="FRANK">FRANK</span>
+      </h1>
+      <p class="hero-desc">Building purposeful apps with clean code,<br/>real-world impact, and attention to craft.</p>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn-magnetic btn-primary">
+          <span>View Work</span>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+        <a href="#contact" class="btn-magnetic btn-outline">
+          <span>Let's Talk</span>
+        </a>
       </div>
     </div>
-    <div class="hero-scroll">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
+
+    <div class="hero-right">
+      <div class="hero-stats-vertical">
+        <div class="vstat">
+          <span class="vstat-num" data-target="5">0</span>
+          <span class="vstat-line"></span>
+          <span class="vstat-label">Projects<br/>Delivered</span>
+        </div>
+        <div class="vstat">
+          <span class="vstat-num" data-target="46">0</span>
+          <span class="vstat-line"></span>
+          <span class="vstat-label">Automated<br/>Tests</span>
+        </div>
+        <div class="vstat">
+          <span class="vstat-num" data-target="98">0</span>
+          <span class="vstat-line"></span>
+          <span class="vstat-label">% Code<br/>Coverage</span>
+        </div>
+      </div>
+      <div class="hero-orbit">
+        <div class="orbit-core"><i class="fas fa-code"></i></div>
+        <div class="orbit orbit-1"><div class="orbit-dot"><i class="fab fa-python"></i></div></div>
+        <div class="orbit orbit-2"><div class="orbit-dot"><i class="fab fa-js"></i></div></div>
+        <div class="orbit orbit-3"><div class="orbit-dot"><i class="fas fa-database"></i></div></div>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint">
+      <span>Scroll to explore</span>
+      <div class="scroll-track"><div class="scroll-thumb"></div></div>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="section-label">01 / About</div>
-    <div class="about-grid">
-      <div class="about-visual">
-        <div class="about-card-outer">
-          <div class="about-card-inner">
-            <div class="about-icon"><i class="fas fa-code"></i></div>
-            <div class="about-ring ring-1"></div>
-            <div class="about-ring ring-2"></div>
-            <div class="about-ring ring-3"></div>
+  <!-- ===== ABOUT ===== -->
+  <section id="about" class="snap-section">
+    <div class="section-bg-number">02</div>
+    <div class="about-container">
+      <div class="about-label">About Me</div>
+      <h2 class="about-title">Code meets <br/><em>purpose</em></h2>
+      <div class="about-body">
+        <div class="about-col">
+          <p>I'm a Full Stack Developer from Brazil, currently based in Dublin. I'm completing the Full Stack Software Development programme at Code Institute — building production-ready applications from scratch.</p>
+          <p>Every line of code I write has a reason. I care about clean architecture, thorough testing, and building things that genuinely help people.</p>
+          <blockquote>"Whatever you do, work at it with all your heart." — Col 3:23</blockquote>
+        </div>
+        <div class="about-col">
+          <div class="about-facts">
+            <div class="fact-row">
+              <span class="fact-icon"><i class="fas fa-map-marker-alt"></i></span>
+              <div><strong>Dublin, Ireland</strong><span>Originally from Brazil 🇧🇷</span></div>
+            </div>
+            <div class="fact-row">
+              <span class="fact-icon"><i class="fas fa-graduation-cap"></i></span>
+              <div><strong>Code Institute</strong><span>Full Stack Development</span></div>
+            </div>
+            <div class="fact-row">
+              <span class="fact-icon"><i class="fas fa-heart"></i></span>
+              <div><strong>Mental Health Tech</strong><span>Building with empathy</span></div>
+            </div>
+            <div class="fact-row">
+              <span class="fact-icon"><i class="fas fa-search"></i></span>
+              <div><strong>Open to Work</strong><span>Junior Full Stack roles</span></div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="about-text">
-        <h2>Building things that <span class="purple">matter</span></h2>
-        <p>I'm a Full Stack Developer from Brazil, currently based in Dublin, Ireland. I'm completing the Full Stack Software Development programme at Code Institute, where I've built production-ready applications from the ground up.</p>
-        <p>I believe code should be clean, tested, and purposeful. Every project I build combines technical rigour with real human value.</p>
-        <div class="about-tags">
-          <span class="tag">🇧🇷 From Brazil</span>
-          <span class="tag">🇮🇪 Based in Dublin</span>
-          <span class="tag">💚 Mental Health Tech</span>
-          <span class="tag">🙏 Faith-driven</span>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS ===== -->
+  <section id="skills" class="snap-section">
+    <div class="section-bg-number">03</div>
+    <div class="skills-container">
+      <div class="skills-header">
+        <div class="about-label">Tech Stack</div>
+        <h2 class="section-h2">My <em>Arsenal</em></h2>
+        <div class="skill-tabs">
+          <button class="skill-tab active" data-tab="backend">Back-end</button>
+          <button class="skill-tab" data-tab="frontend">Front-end</button>
+          <button class="skill-tab" data-tab="tools">Tools</button>
         </div>
-        <blockquote>"Whatever you do, work at it with all your heart." — Col 3:23</blockquote>
-        <a href="mailto:cleinofrank@gmail.com" class="btn-primary">Download CV</a>
+      </div>
+      <div class="skill-panels">
+        <div class="skill-panel active" data-panel="backend">
+          <div class="skill-item" data-pct="85"><div class="si-icon"><i class="fab fa-python"></i></div><div class="si-info"><span>Python</span><div class="si-bar"><div class="si-fill"></div></div></div><span class="si-pct">85%</span></div>
+          <div class="skill-item" data-pct="80"><div class="si-icon"><i class="fas fa-leaf"></i></div><div class="si-info"><span>Django</span><div class="si-bar"><div class="si-fill"></div></div></div><span class="si-pct">80%</span></div>
+          <div class="skill-item" data-pct="72"><div class="si-icon"><i class="fas fa-database"></i></div><div class="si-info"><span>PostgreSQL</span><div class="si-bar"><div class="si-fill"></div></div></div><span class="si-pct">72%</span></div>
+          <div class="skill-item" data-pct="65"><div class="si-icon"><i class="fab fa-php"></i></div><div class="si-info"><span>PHP</span><div class="si-bar"><div class="si-fill"></div></div></div><span class="si-pct">65%</span></div>
+        </div>
+        <div class="skill-panel" data-panel="frontend">
+          <div class="skill-item" data-pct="90"><div class="si-icon"><i class="fab fa-html5"></i></div><div class="si-info"><span>HTML5</span><div class="si-bar"><div class="si-fill"></div></div></div><span class="si-pct">90%</span></div>
+          <div class="skill-item" data-pct="85"><div class="si-icon"><i class="fab fa-css3-alt"></i></div><div class="si-info"><span>CSS3</span><div class="si-bar"><div class="si-fill"></div></div></div><span class="si-pct">85%</span></div>
+          <div class="skill-item" data-pct="75"><div class="si-icon"><i class="fab fa-js"></i></div><div class="si-info"><span>JavaScript</span><div class="si-bar"><div class="si-fill"></div></div></div><span class="si-pct">75%</span></div>
+          <div class="skill-item" data-pct="88"><div class="si-icon"><i class="fab fa-bootstrap"></i></div><div class="si-info"><span>Bootstrap</span><div class="si-bar"><div class="si-fill"></div></div></div><span class="si-pct">88%</span></div>
+        </div>
+        <div class="skill-panel" data-panel="tools">
+          <div class="skill-item" data-pct="82"><div class="si-icon"><i class="fab fa-git-alt"></i></div><div class="si-info"><span>Git & GitHub</span><div class="si-bar"><div class="si-fill"></div></div></div><span class="si-pct">82%</span></div>
+          <div class="skill-item" data-pct="78"><div class="si-icon"><i class="fas fa-cloud"></i></div><div class="si-info"><span>Heroku</span><div class="si-bar"><div class="si-fill"></div></div></div><span class="si-pct">78%</span></div>
+          <div class="skill-item" data-pct="80"><div class="si-icon"><i class="fas fa-vial"></i></div><div class="si-info"><span>Testing (98% cov.)</span><div class="si-bar"><div class="si-fill"></div></div></div><span class="si-pct">80%</span></div>
+          <div class="skill-item" data-pct="70"><div class="si-icon"><i class="fas fa-terminal"></i></div><div class="si-info"><span>VS Code / CLI</span><div class="si-bar"><div class="si-fill"></div></div></div><span class="si-pct">70%</span></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- SKILLS -->
-  <section id="skills">
-    <div class="section-label">02 / Skills</div>
-    <h2 class="section-title">Tech <span class="purple">Arsenal</span></h2>
-    <div class="skills-grid">
-      <div class="skill-card" data-aos>
-        <div class="skill-icon"><i class="fab fa-python"></i></div>
-        <div class="skill-name">Python</div>
-        <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+  <!-- ===== PROJECTS ===== -->
+  <section id="projects" class="snap-section">
+    <div class="section-bg-number">04</div>
+    <div class="projects-container">
+      <div class="projects-header">
+        <div class="about-label">Work</div>
+        <h2 class="section-h2">Featured <em>Projects</em></h2>
       </div>
-      <div class="skill-card" data-aos>
-        <div class="skill-icon"><i class="fas fa-leaf"></i></div>
-        <div class="skill-name">Django</div>
-        <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
-      </div>
-      <div class="skill-card" data-aos>
-        <div class="skill-icon"><i class="fas fa-database"></i></div>
-        <div class="skill-name">PostgreSQL</div>
-        <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
-      </div>
-      <div class="skill-card" data-aos>
-        <div class="skill-icon"><i class="fab fa-js"></i></div>
-        <div class="skill-name">JavaScript</div>
-        <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
-      </div>
-      <div class="skill-card" data-aos>
-        <div class="skill-icon"><i class="fab fa-html5"></i></div>
-        <div class="skill-name">HTML5</div>
-        <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
-      </div>
-      <div class="skill-card" data-aos>
-        <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
-        <div class="skill-name">CSS3</div>
-        <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
-      </div>
-      <div class="skill-card" data-aos>
-        <div class="skill-icon"><i class="fab fa-bootstrap"></i></div>
-        <div class="skill-name">Bootstrap</div>
-        <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
-      </div>
-      <div class="skill-card" data-aos>
-        <div class="skill-icon"><i class="fab fa-git-alt"></i></div>
-        <div class="skill-name">Git</div>
-        <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+      <div class="accordion">
+
+        <div class="acc-item active" data-index="01">
+          <div class="acc-header">
+            <span class="acc-num">01</span>
+            <span class="acc-title">Mental Health Tracker</span>
+            <span class="acc-tags-inline"><em>Django</em><em>Python</em><em>PostgreSQL</em></span>
+            <span class="acc-arrow"><i class="fas fa-chevron-down"></i></span>
+          </div>
+          <div class="acc-body">
+            <div class="acc-content">
+              <p>Full-stack wellness app to log daily mood, visualise weekly trends, and access curated mental health resources. Built with Django, PostgreSQL and Chart.js. 46 automated tests with 98% coverage.</p>
+              <div class="acc-links">
+                <a href="https://mental-health-tracker-cleino-e2c27d0f57d7.herokuapp.com/" target="_blank" class="btn-accent"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                <a href="https://github.com/oliveiracle/mental-health-tracker" target="_blank" class="btn-ghost-sm"><i class="fab fa-github"></i> Source Code</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-index="02">
+          <div class="acc-header">
+            <span class="acc-num">02</span>
+            <span class="acc-title">Street 66 Bar</span>
+            <span class="acc-tags-inline"><em>JavaScript</em><em>PHP</em><em>CSS</em></span>
+            <span class="acc-arrow"><i class="fas fa-chevron-down"></i></span>
+          </div>
+          <div class="acc-body">
+            <div class="acc-content">
+              <p>Production website for a cocktail bar in Temple Bar, Dublin. Integrates Google Maps API and Spotify API with interactive galleries and booking functionality.</p>
+              <div class="acc-links">
+                <a href="https://street66bar.ie" target="_blank" class="btn-accent"><i class="fas fa-external-link-alt"></i> Live Site</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-index="03">
+          <div class="acc-header">
+            <span class="acc-num">03</span>
+            <span class="acc-title">The Life of Jesus</span>
+            <span class="acc-tags-inline"><em>Python</em><em>Heroku</em></span>
+            <span class="acc-arrow"><i class="fas fa-chevron-down"></i></span>
+          </div>
+          <div class="acc-body">
+            <div class="acc-content">
+              <p>Python terminal application exploring 25 key moments in Jesus' life. Features a search system and dictionary-based architecture deployed on Heroku.</p>
+              <div class="acc-links">
+                <a href="https://the-life-of-jesus-8c3f14f0c4c2.herokuapp.com/" target="_blank" class="btn-accent"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                <a href="https://github.com/oliveiracle/the-life-of-jesus" target="_blank" class="btn-ghost-sm"><i class="fab fa-github"></i> Source Code</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-index="04">
+          <div class="acc-header">
+            <span class="acc-num">04</span>
+            <span class="acc-title">The Word of God</span>
+            <span class="acc-tags-inline"><em>HTML</em><em>CSS</em><em>JavaScript</em></span>
+            <span class="acc-arrow"><i class="fas fa-chevron-down"></i></span>
+          </div>
+          <div class="acc-body">
+            <div class="acc-content">
+              <p>Bible verse generator based on emotional state. Features a dual-palette UI design with share functionality — built entirely with vanilla HTML, CSS and JavaScript.</p>
+              <div class="acc-links">
+                <a href="https://oliveiracle.github.io/the-word-of-god/" target="_blank" class="btn-accent"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                <a href="https://github.com/oliveiracle/the-word-of-god" target="_blank" class="btn-ghost-sm"><i class="fab fa-github"></i> Source Code</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item" data-index="05">
+          <div class="acc-header">
+            <span class="acc-num">05</span>
+            <span class="acc-title">MARIA Spa</span>
+            <span class="acc-tags-inline"><em>HTML</em><em>CSS</em></span>
+            <span class="acc-arrow"><i class="fas fa-chevron-down"></i></span>
+          </div>
+          <div class="acc-body">
+            <div class="acc-content">
+              <p>Minimalist website for a luxury wellness centre. Mobile-first design focused on elegance, clean typography, and a calming user experience.</p>
+              <div class="acc-links">
+                <a href="https://github.com/oliveiracle/maria-spa" target="_blank" class="btn-ghost-sm"><i class="fab fa-github"></i> Source Code</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- PROJECTS -->
-  <section id="projects">
-    <div class="section-label">03 / Projects</div>
-    <h2 class="section-title">Featured <span class="purple">Work</span></h2>
-    <div class="projects-grid">
-
-      <div class="project-card featured" data-aos>
-        <div class="project-badge">Featured</div>
-        <div class="project-number">01</div>
-        <h3>Mental Health Tracker</h3>
-        <p>Full-stack wellness app to log daily mood, visualise weekly trends, and access curated mental health resources. 46 automated tests with 98% coverage.</p>
-        <div class="project-tags">
-          <span>Django</span><span>Python</span><span>PostgreSQL</span><span>Chart.js</span>
-        </div>
-        <div class="project-links">
-          <a href="https://mental-health-tracker-cleino-e2c27d0f57d7.herokuapp.com/" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
-          <a href="https://github.com/oliveiracle/mental-health-tracker" target="_blank"><i class="fab fa-github"></i> Code</a>
-        </div>
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" class="snap-section">
+    <div class="section-bg-number">05</div>
+    <div class="contact-container">
+      <div class="about-label">Contact</div>
+      <h2 class="contact-title">Let's build something<br/><em>meaningful.</em></h2>
+      <p class="contact-sub">Open to junior full-stack roles in Dublin or remote.<br/>I'd love to hear about your project.</p>
+      <div class="contact-grid">
+        <a href="mailto:cleinofrank@gmail.com" class="c-card">
+          <div class="c-icon"><i class="fas fa-envelope"></i></div>
+          <div class="c-info"><strong>Email</strong><span>cleinofrank@gmail.com</span></div>
+          <i class="fas fa-arrow-right c-arrow"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/cleino-frank-de-oliveira" target="_blank" class="c-card">
+          <div class="c-icon"><i class="fab fa-linkedin"></i></div>
+          <div class="c-info"><strong>LinkedIn</strong><span>cleino-frank-de-oliveira</span></div>
+          <i class="fas fa-arrow-right c-arrow"></i>
+        </a>
+        <a href="https://github.com/oliveiracle" target="_blank" class="c-card">
+          <div class="c-icon"><i class="fab fa-github"></i></div>
+          <div class="c-info"><strong>GitHub</strong><span>oliveiracle</span></div>
+          <i class="fas fa-arrow-right c-arrow"></i>
+        </a>
       </div>
-
-      <div class="project-card" data-aos>
-        <div class="project-number">02</div>
-        <h3>Street 66 Bar</h3>
-        <p>Production website for a cocktail bar in Temple Bar, Dublin. Integrates Google Maps API and Spotify API with interactive galleries.</p>
-        <div class="project-tags">
-          <span>JavaScript</span><span>PHP</span><span>CSS</span>
-        </div>
-        <div class="project-links">
-          <a href="https://street66bar.ie" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
-        </div>
+      <div class="contact-footer">
+        <div class="footer-logo">CF<span>.</span></div>
+        <p>Designed & built by Cleino Frank · Dublin · 2026</p>
+        <p class="footer-quote">"Whatever you do, work at it with all your heart." — Col 3:23</p>
       </div>
-
-      <div class="project-card" data-aos>
-        <div class="project-number">03</div>
-        <h3>The Life of Jesus</h3>
-        <p>Python terminal application exploring 25 key moments in Jesus' life. Dictionary-based architecture with a search system.</p>
-        <div class="project-tags">
-          <span>Python</span>
-        </div>
-        <div class="project-links">
-          <a href="https://the-life-of-jesus-8c3f14f0c4c2.herokuapp.com/" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
-          <a href="https://github.com/oliveiracle/the-life-of-jesus" target="_blank"><i class="fab fa-github"></i> Code</a>
-        </div>
-      </div>
-
-      <div class="project-card" data-aos>
-        <div class="project-number">04</div>
-        <h3>The Word of God</h3>
-        <p>Bible verse generator based on emotional state. Dual-palette UI design with share functionality.</p>
-        <div class="project-tags">
-          <span>HTML</span><span>CSS</span><span>JavaScript</span>
-        </div>
-        <div class="project-links">
-          <a href="https://oliveiracle.github.io/the-word-of-god/" target="_blank"><i class="fas fa-external-link-alt"></i> Live</a>
-          <a href="https://github.com/oliveiracle/the-word-of-god" target="_blank"><i class="fab fa-github"></i> Code</a>
-        </div>
-      </div>
-
-      <div class="project-card" data-aos>
-        <div class="project-number">05</div>
-        <h3>MARIA Spa</h3>
-        <p>Minimalist website for a luxury wellness centre. Mobile-first, clean design focused on elegance and usability.</p>
-        <div class="project-tags">
-          <span>HTML</span><span>CSS</span>
-        </div>
-        <div class="project-links">
-          <a href="https://github.com/oliveiracle/maria-spa" target="_blank"><i class="fab fa-github"></i> Code</a>
-        </div>
-      </div>
-
     </div>
   </section>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="section-label">04 / Contact</div>
-    <h2 class="section-title">Let's <span class="purple">Connect</span></h2>
-    <p class="contact-sub">Open to junior full-stack roles in Dublin or remote. Let's build something meaningful together.</p>
-    <div class="contact-links">
-      <a href="mailto:cleinofrank@gmail.com" class="contact-card">
-        <i class="fas fa-envelope"></i>
-        <span>cleinofrank@gmail.com</span>
-      </a>
-      <a href="https://www.linkedin.com/in/cleino-frank-de-oliveira" target="_blank" class="contact-card">
-        <i class="fab fa-linkedin"></i>
-        <span>LinkedIn</span>
-      </a>
-      <a href="https://github.com/oliveiracle" target="_blank" class="contact-card">
-        <i class="fab fa-github"></i>
-        <span>GitHub</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo">CF<span class="dot">.</span></div>
-    <p>Designed & built by Cleino Frank · Dublin, Ireland · 2026</p>
-    <p class="footer-quote">"Whatever you do, work at it with all your heart." — Col 3:23</p>
-  </footer>
 
   <script src="script.js"></script>
 </body>
