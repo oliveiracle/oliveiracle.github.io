@@ -83,9 +83,16 @@ const chatKnowledge = [
     ]
   },
   {
-    keys: ['where are you', 'location', 'based', 'dublin', 'ireland', 'brazil', 'remote work', 'onsite', 'stoneybatter'],
+    keys: ['where are you', 'location', 'based', 'dublin', 'ireland', 'brazil', 'onsite', 'stoneybatter', 'live in'],
     responses: [
-      "I'm based in Stoneybatter, Dublin, Ireland 🇮🇪 — originally from Brazil 🇧🇷. Open to Dublin-based roles or fully remote positions anywhere in the world!"
+      "I'm based in Stoneybatter, Dublin, Ireland 🇮🇪 — originally from Brazil 🇧🇷. I'm open to Dublin-based roles, hybrid, or fully remote. I have full working rights in Ireland (Stamp 4)."
+    ]
+  },
+  {
+    keys: ['remote', 'work from home', 'wfh', 'hybrid', 'fully remote', 'remote job', 'remote position'],
+    responses: [
+      "Remote work is absolutely fine for me! 💻 I'm set up to work fully remotely — good internet, home office, and experience collaborating on GitHub. I'm also open to hybrid arrangements in Dublin. The tools I use (Git, Slack, Zoom) make async/remote collaboration natural.",
+      "Yes, I'm comfortable working remotely! I already work with GitHub, Heroku, and cloud tools daily — remote-first workflows are second nature to me. Dublin-based, hybrid or fully remote — all options work for me. 🌍"
     ]
   },
   {
@@ -119,9 +126,34 @@ const chatKnowledge = [
     ]
   },
   {
-    keys: ['freelance', 'side project', 'self employed', 'own client', 'freelancer'],
+    keys: ['freelance', 'self employed', 'own client', 'freelancer', 'hire you for', 'project for me', 'build me', 'build a website', 'build my site', 'need a website', 'need a developer'],
     responses: [
-      "I've been freelancing as a Junior Web Developer since May 2024 — alongside my studies and work! My first paid project was Street 66 Bar's commercial website (street66bar.ie). I'm always open to freelance work while I pursue full-time dev roles. 💻"
+      "Yes, I'm open to freelance projects! 🤝 I've been freelancing since May 2024 — my first paid project was the commercial website for Street 66 Bar (street66bar.ie). I can help with:\n\n🌐 Business websites\n🛒 Landing pages & portfolios\n🐍 Django web apps\n📊 Custom tools & dashboards\n\nGet in touch: cleinofrank@gmail.com",
+      "Freelance is something I actively do! 💻 Based in Dublin but available remotely too. I handle the full lifecycle — design, build, deploy, and domain setup. Interested? Drop me an email: cleinofrank@gmail.com"
+    ]
+  },
+  {
+    keys: ['how much', 'price', 'rate', 'cost', 'charge', 'budget', 'quote', 'pricing'],
+    responses: [
+      "My rates depend on the scope of the project:\n\n💡 Simple landing page: from €300–500\n🌐 Business website: from €600–1,200\n⚙️ Full-stack web app: from €1,000+\n\nI always offer a free initial consultation to understand your needs before quoting. Get in touch: cleinofrank@gmail.com 📩"
+    ]
+  },
+  {
+    keys: ['how long', 'timeline', 'deadline', 'turnaround', 'when', 'delivery time'],
+    responses: [
+      "Timelines depend on project complexity:\n\n⚡ Landing page: 3–5 days\n🌐 Business website: 1–2 weeks\n⚙️ Web app (Django): 2–6 weeks\n\nI work efficiently and communicate progress throughout. Tight deadline? Let's talk — cleinofrank@gmail.com 📩"
+    ]
+  },
+  {
+    keys: ['ireland', 'irish', 'dublin company', 'irish company', 'work permit', 'visa', 'stamp', 'right to work'],
+    responses: [
+      "I have full right to work in Ireland (Stamp 4) 🇮🇪 — no visa sponsorship needed. I'm based in Dublin and available for on-site, hybrid, or fully remote roles. Companies don't need to worry about any work permit restrictions with me."
+    ]
+  },
+  {
+    keys: ['what can you build', 'what services', 'what do you offer', 'what do you do', 'services'],
+    responses: [
+      "Here's what I can build for you:\n\n🌐 Business websites (responsive, fast, SEO-ready)\n📄 Portfolio sites (like this one!)\n🛒 Landing pages & lead generation pages\n🐍 Django web applications (CRUD, auth, dashboards)\n📊 Data dashboards with Chart.js\n⚙️ REST APIs with Django REST Framework\n\nBased in Dublin, available remotely worldwide. Email: cleinofrank@gmail.com"
     ]
   },
   {
@@ -143,8 +175,12 @@ const fallbacks = [
 const suggestions = [
   { label: '👋 Who are you?', query: 'Who are you?' },
   { label: '🛠️ Your skills', query: 'What are your skills?' },
+  { label: '💻 Freelance?', query: 'Are you available for freelance?' },
+  { label: '🌍 Remote work?', query: 'Do you work remotely?' },
   { label: '🚀 Your projects', query: 'Tell me about your projects' },
   { label: '💼 Open to work?', query: 'Are you available to hire?' },
+  { label: '💰 What do you charge?', query: 'How much do you charge?' },
+  { label: '📞 Contact', query: 'How can I contact you?' },
 ];
 
 function getResponse(input) {
