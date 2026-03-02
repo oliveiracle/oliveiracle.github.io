@@ -48,9 +48,9 @@ let diskParticles = [], spiralParticles = [], bgStars = [];
 function resize() {
   W = canvas.width = window.innerWidth;
   H = canvas.height = window.innerHeight;
-  BH.x = W < 768 ? W * 0.5 : W * 0.68;
+  BH.x = W < 768 ? W * 0.5 : W * 0.64;
   BH.y = H * 0.5;
-  BH.r = Math.min(W, H) * 0.085;
+  BH.r = Math.min(W, H) * 0.1;
   initBH();
 }
 
