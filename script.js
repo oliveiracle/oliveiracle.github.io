@@ -36,61 +36,215 @@ document.querySelectorAll('a, button, .acc-header, .fact-row, .c-card, .skill-it
   el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); cursorGlow.classList.remove('hover'); });
 });
 
-// ---- STAR FIELD ----
+// ---- BLACK HOLE CANVAS ----
 const canvas = document.getElementById('stars');
 const ctx = canvas.getContext('2d');
-let stars = [], shooters = [], W, H;
+let W, H;
 
-function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-function initStars() {
-  stars = Array.from({length: 180}, () => ({
-    x: Math.random() * W, y: Math.random() * H,
-    r: Math.random() * 1.4 + 0.2,
-    s: Math.random() * 0.12 + 0.02,
-    o: Math.random() * 0.8 + 0.1,
-    flicker: Math.random() * 0.025
-  }));
+const BH = { x: 0, y: 0, r: 0 };
+const TILT = 0.18; // disk perspective (y compression)
+let diskParticles = [], spiralParticles = [], bgStars = [];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+  BH.x = W < 768 ? W * 0.5 : W * 0.68;
+  BH.y = H * 0.5;
+  BH.r = Math.min(W, H) * 0.085;
+  initBH();
 }
 
-setInterval(() => {
-  shooters.push({ x: Math.random() * W, y: Math.random() * H * 0.4, len: 80 + Math.random()*60, spd: 7 + Math.random()*5, o: 1, a: Math.PI/5 });
-}, 3500);
+function initBH() {
+  bgStars = Array.from({ length: 70 }, () => ({
+    x: Math.random() * W, y: Math.random() * H,
+    r: Math.random() * 0.9 + 0.1,
+    o: Math.random() * 0.35 + 0.05
+  }));
+
+  diskParticles = [];
+  for (let i = 0; i < 420; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const dist = BH.r * (1.5 + Math.pow(Math.random(), 0.55) * 3.6);
+    const speed = 0.0055 / Math.sqrt(dist / BH.r);
+    const tempFactor = Math.max(0, 1 - (dist - BH.r * 1.5) / (BH.r * 3.6));
+    diskParticles.push({
+      angle, dist,
+      speed: speed * (Math.random() > 0.04 ? 1 : -1),
+      size: Math.random() * 1.8 + 0.2,
+      brightness: Math.random() * 0.75 + 0.25,
+      tempFactor
+    });
+  }
+
+  spiralParticles = [];
+  for (let i = 0; i < 55; i++) spiralParticles.push(newSpiral());
+}
+
+function newSpiral() {
+  const startDist = BH.r * (4.5 + Math.random() * 7);
+  return {
+    angle: Math.random() * Math.PI * 2,
+    dist: startDist, startDist,
+    fallSpeed: 0.18 + Math.random() * 0.4,
+    rotSpeed: 0.012 + Math.random() * 0.022,
+    size: Math.random() * 1.3 + 0.2,
+    opacity: Math.random() * 0.55 + 0.25
+  };
+}
+
+function particleColor(t) {
+  if (t > 0.72) {
+    const k = (t - 0.72) / 0.28;
+    return [255, Math.floor(190 + k * 65), Math.floor(k * 180)];
+  } else if (t > 0.35) {
+    const k = (t - 0.35) / 0.37;
+    return [255, Math.floor(70 + k * 120), 0];
+  } else {
+    const k = t / 0.35;
+    return [Math.floor(140 + k * 115), Math.floor(k * 70), 0];
+  }
+}
+
+function drawJet(dir) {
+  const jLen = BH.r * 5.5;
+  const jWidth = BH.r * 0.28;
+  const y0 = BH.y + dir * BH.r * 0.9;
+  const y1 = BH.y + dir * (BH.r + jLen);
+  const grad = ctx.createLinearGradient(BH.x, y0, BH.x, y1);
+  grad.addColorStop(0, 'rgba(167,139,250,0.75)');
+  grad.addColorStop(0.45, 'rgba(139,92,246,0.28)');
+  grad.addColorStop(1, 'transparent');
+  ctx.beginPath();
+  ctx.moveTo(BH.x - 2, y0);
+  ctx.lineTo(BH.x + 2, y0);
+  ctx.lineTo(BH.x + jWidth, y1);
+  ctx.lineTo(BH.x - jWidth, y1);
+  ctx.closePath();
+  ctx.fillStyle = grad;
+  ctx.fill();
+}
 
 function drawFrame() {
   ctx.clearRect(0, 0, W, H);
 
-  // Grid
-  ctx.strokeStyle = 'rgba(139,92,246,0.03)';
-  ctx.lineWidth = 1;
-  for(let x=0; x<W; x+=100) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
-  for(let y=0; y<H; y+=100) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+  // Deep void
+  ctx.fillStyle = '#000005';
+  ctx.fillRect(0, 0, W, H);
 
-  // Stars
-  stars.forEach(s => {
-    s.o += Math.sin(Date.now() * s.flicker) * 0.008;
-    s.o = Math.max(0.05, Math.min(1, s.o));
-    s.y -= s.s;
-    if(s.y < 0) { s.y = H; s.x = Math.random() * W; }
-    ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
-    ctx.fillStyle = `rgba(255,255,255,${s.o})`; ctx.fill();
+  // Background stars
+  bgStars.forEach(s => {
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,255,255,${s.o})`;
+    ctx.fill();
   });
 
-  // Shooting stars
-  shooters.forEach((ss, i) => {
-    const ex = ss.x - Math.cos(ss.a)*ss.len, ey = ss.y - Math.sin(ss.a)*ss.len;
-    const g = ctx.createLinearGradient(ss.x, ss.y, ex, ey);
-    g.addColorStop(0, `rgba(167,139,250,${ss.o})`);
-    g.addColorStop(1, 'transparent');
-    ctx.beginPath(); ctx.moveTo(ss.x, ss.y); ctx.lineTo(ex, ey);
-    ctx.strokeStyle = g; ctx.lineWidth = 1.5; ctx.stroke();
-    ss.x += Math.cos(ss.a)*ss.spd; ss.y += Math.sin(ss.a)*ss.spd;
-    ss.o -= 0.018;
-    if(ss.o <= 0) shooters.splice(i, 1);
+  // Outer ambient haze
+  const outerHaze = ctx.createRadialGradient(BH.x, BH.y, BH.r * 2, BH.x, BH.y, BH.r * 7.5);
+  outerHaze.addColorStop(0, 'rgba(255,100,0,0.09)');
+  outerHaze.addColorStop(0.45, 'rgba(180,45,0,0.04)');
+  outerHaze.addColorStop(1, 'transparent');
+  ctx.fillStyle = outerHaze;
+  ctx.fillRect(0, 0, W, H);
+
+  // Update all disk particle angles first
+  diskParticles.forEach(p => { p.angle += p.speed; });
+
+  // Back half of disk (sin < 0 = behind black hole)
+  diskParticles.filter(p => Math.sin(p.angle) < 0).forEach(p => {
+    const px = BH.x + Math.cos(p.angle) * p.dist;
+    const py = BH.y + Math.sin(p.angle) * p.dist * TILT;
+    const [r, g, b] = particleColor(p.tempFactor);
+    ctx.beginPath();
+    ctx.arc(px, py, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${r},${g},${b},${p.brightness * 0.55})`;
+    ctx.fill();
+    if (p.brightness > 0.65 && p.tempFactor > 0.45) {
+      ctx.beginPath();
+      ctx.arc(px, py, p.size * 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${p.brightness * 0.07})`;
+      ctx.fill();
+    }
   });
+
+  // Spiral infalling particles
+  spiralParticles.forEach((p, i) => {
+    p.angle += p.rotSpeed;
+    p.dist -= p.fallSpeed;
+    if (p.dist <= BH.r) { spiralParticles[i] = newSpiral(); return; }
+    const fade = (p.dist - BH.r) / (p.startDist - BH.r);
+    const px = BH.x + Math.cos(p.angle) * p.dist;
+    const py = BH.y + Math.sin(p.angle) * p.dist * 0.22;
+    ctx.beginPath();
+    ctx.arc(px, py, p.size * Math.max(0.1, fade), 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,140,0,${p.opacity * fade * 0.65})`;
+    ctx.fill();
+  });
+
+  // Relativistic jets
+  drawJet(-1);
+  drawJet(1);
+
+  // Photon sphere / gravitational lensing ring
+  const lensing = ctx.createRadialGradient(BH.x, BH.y, BH.r * 0.88, BH.x, BH.y, BH.r * 1.65);
+  lensing.addColorStop(0, 'transparent');
+  lensing.addColorStop(0.5, 'rgba(255,190,80,0.28)');
+  lensing.addColorStop(0.72, 'rgba(255,110,0,0.16)');
+  lensing.addColorStop(1, 'transparent');
+  ctx.beginPath();
+  ctx.arc(BH.x, BH.y, BH.r * 1.65, 0, Math.PI * 2);
+  ctx.fillStyle = lensing;
+  ctx.fill();
+
+  // Event horizon shadow
+  const shadow = ctx.createRadialGradient(BH.x, BH.y, 0, BH.x, BH.y, BH.r * 1.28);
+  shadow.addColorStop(0.65, '#000000');
+  shadow.addColorStop(0.82, 'rgba(0,0,0,0.96)');
+  shadow.addColorStop(1, 'transparent');
+  ctx.beginPath();
+  ctx.arc(BH.x, BH.y, BH.r * 1.28, 0, Math.PI * 2);
+  ctx.fillStyle = shadow;
+  ctx.fill();
+
+  // Solid event horizon
+  ctx.beginPath();
+  ctx.arc(BH.x, BH.y, BH.r, 0, Math.PI * 2);
+  ctx.fillStyle = '#000000';
+  ctx.fill();
+
+  // Front half of disk (sin >= 0 = in front of black hole)
+  diskParticles.filter(p => Math.sin(p.angle) >= 0).forEach(p => {
+    const px = BH.x + Math.cos(p.angle) * p.dist;
+    const py = BH.y + Math.sin(p.angle) * p.dist * TILT;
+    const [r, g, b] = particleColor(p.tempFactor);
+    ctx.beginPath();
+    ctx.arc(px, py, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(${r},${g},${b},${p.brightness * 0.88})`;
+    ctx.fill();
+    if (p.brightness > 0.6 && p.tempFactor > 0.4) {
+      ctx.beginPath();
+      ctx.arc(px, py, p.size * 4, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${p.brightness * 0.11})`;
+      ctx.fill();
+    }
+  });
+
+  // Hawking radiation flashes
+  if (Math.random() < 0.12) {
+    const a = Math.random() * Math.PI * 2;
+    const rr = BH.r * (1.0 + Math.random() * 0.25);
+    ctx.beginPath();
+    ctx.arc(BH.x + Math.cos(a) * rr, BH.y + Math.sin(a) * rr * TILT, 1, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255,255,220,0.92)';
+    ctx.fill();
+  }
+
   requestAnimationFrame(drawFrame);
 }
-resize(); initStars(); drawFrame();
-window.addEventListener('resize', () => { resize(); initStars(); });
+
+resize();
+drawFrame();
+window.addEventListener('resize', resize);
 
 // ---- COUNTER ANIMATION ----
 function animateCount(el) {
